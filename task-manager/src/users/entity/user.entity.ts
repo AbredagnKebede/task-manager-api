@@ -1,22 +1,23 @@
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Task } from "src/tasks/entity/task.entity";
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 
 @Entity()
 export class User {
-
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+    @PrimaryGeneratedColumn()
+    id: number;
 
     @Column()
     name: string;
 
-    @Column({unique: true})
+    @Column({ unique: true })
     email: string;
-
-    @OneToMany(() => Task, task => task.user)
-    tasks: Task[];
 
     @Column()
     password: string;
 
+    @Column({ default: false })
+    isEmailVerified: boolean;
+
+    @OneToMany(() => Task, task => task.user)
+    tasks: Task[];
 }
